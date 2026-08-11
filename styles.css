@@ -74,7 +74,7 @@ body {
 }
 
 .brand-logo {
-  height: 48px;
+  height: 44px;
   width: auto;
   object-fit: contain;
   border-radius: 6px;
@@ -84,7 +84,7 @@ body {
 }
 
 .brand-info h1 {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 800;
   letter-spacing: 0.5px;
   color: #ffffff;
@@ -92,7 +92,7 @@ body {
 }
 
 .brand-info p {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
 }
 
@@ -100,12 +100,13 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 /* Button UI */
 .btn {
   font-family: var(--font-main);
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   font-weight: 600;
   padding: 9px 16px;
   border-radius: 8px;
@@ -113,8 +114,10 @@ body {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .btn-primary {
@@ -156,7 +159,7 @@ body {
 
 .btn-sm {
   font-size: 0.75rem;
-  padding: 4px 10px;
+  padding: 5px 10px;
   border-radius: 6px;
   font-weight: 600;
 }
@@ -183,29 +186,6 @@ body {
   overflow: hidden;
 }
 
-.mobile-view-toggle {
-  display: none;
-  background-color: #0b1120;
-  padding: 8px;
-  border-bottom: 1px solid var(--bg-card-border);
-  gap: 8px;
-}
-.mobile-view-toggle button {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid var(--bg-card-border);
-  background-color: var(--bg-card);
-  color: var(--text-muted);
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.mobile-view-toggle button.active {
-  background-color: var(--accent-blue);
-  color: #ffffff;
-  border-color: var(--accent-blue);
-}
-
 /* LEFT FORM PANEL */
 .form-editor-panel {
   background-color: var(--bg-app);
@@ -217,7 +197,7 @@ body {
 }
 
 .panel-header {
-  padding: 16px 20px;
+  padding: 14px 20px;
   background-color: #0f172a;
   border-bottom: 1px solid var(--bg-card-border);
   display: flex;
@@ -268,6 +248,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .form-card-header h3 {
@@ -277,7 +259,6 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-
 }
 
 .form-card-body {
@@ -327,10 +308,11 @@ textarea {
   background-color: var(--bg-input);
   border: 1px solid var(--bg-card-border);
   color: #ffffff;
-  padding: 8px 12px;
+  padding: 10px 12px;
   border-radius: 6px;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   transition: all 0.2s;
+  width: 100%;
 }
 
 input:focus, textarea:focus {
@@ -373,11 +355,12 @@ textarea {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: #e2e8f0;
   cursor: pointer;
   user-select: none;
   text-transform: none;
+  min-height: 24px;
 }
 
 .custom-checkbox input {
@@ -385,8 +368,8 @@ textarea {
 }
 
 .checkmark {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border: 1px solid var(--bg-card-border);
   background-color: var(--bg-input);
   border-radius: 4px;
@@ -394,6 +377,7 @@ textarea {
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
+  flex-shrink: 0;
 }
 
 .custom-checkbox input:checked ~ .checkmark {
@@ -405,7 +389,7 @@ textarea {
   content: '✓';
   color: #ffffff;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .flex-inline {
@@ -418,7 +402,7 @@ textarea {
 .fuel-section {
   margin-top: 14px;
   background-color: rgba(0, 0, 0, 0.2);
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
   border: 1px solid var(--bg-card-border);
 }
@@ -441,10 +425,14 @@ textarea {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: #cbd5e1;
   cursor: pointer;
   text-transform: none;
+  background-color: rgba(255, 255, 255, 0.04);
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--bg-card-border);
 }
 
 /* CAR INTERACTIVE INSPECTOR */
@@ -461,6 +449,7 @@ textarea {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
+  gap: 8px;
 }
 
 .car-diagram-wrapper {
@@ -469,6 +458,7 @@ textarea {
   padding: 8px;
   cursor: crosshair;
   border: 1px solid #cbd5e1;
+  touch-action: manipulation;
 }
 
 .car-diagram-wrapper svg {
@@ -593,7 +583,7 @@ textarea {
   border: 1px dashed #94a3b8;
   border-radius: 6px;
   width: 100%;
-  height: 100px;
+  height: 120px;
   cursor: crosshair;
   touch-action: none;
 }
@@ -1007,15 +997,16 @@ textarea {
   align-items: center;
   justify-content: center;
   z-index: 999;
+  padding: 16px;
 }
 
 .modal-card {
   background-color: var(--bg-card);
   border: 1px solid var(--bg-card-border);
   border-radius: 12px;
-  width: 90%;
+  width: 100%;
   max-width: 600px;
-  max-height: 80vh;
+  max-height: 85vh;
   display: flex;
   flex-direction: column;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -1056,12 +1047,13 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .history-item h4 {
   color: #f1f5f9;
   font-size: 0.95rem;
-
 }
 
 .history-item p {
@@ -1072,6 +1064,128 @@ textarea {
 .history-actions {
   display: flex;
   gap: 8px;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (MOBILE & TABLET ADAPTATIONS)
+   ========================================================================== */
+
+/* Under 992px: HIDE PREVIEW PANEL completely on mobile/tablets as requested */
+@media (max-width: 992px) {
+  .app-container {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .form-editor-panel {
+    border-right: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Completely hide preview panel on mobile/tablet screens */
+  .preview-paper-panel {
+    display: none !important;
+  }
+
+  .mobile-view-toggle {
+    display: none !important;
+  }
+}
+
+/* Under 768px: Mobile Layout Adjustments */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .header-brand {
+    justify-content: flex-start;
+  }
+
+  .header-brand .brand-logo {
+    height: 38px;
+  }
+
+  .brand-info h1 {
+    font-size: 1.1rem;
+  }
+
+  .header-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: 100%;
+  }
+
+  .header-actions .btn {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  .form-scroll-container {
+    padding: 12px;
+    gap: 14px;
+  }
+
+  /* Single Column Stack on Mobile */
+  .row-2,
+  .row-3,
+  .signatures-editor-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .full-width,
+  .full-width-2 {
+    grid-column: span 1 !important;
+  }
+
+  .checkbox-group-grid.row-2-col {
+    grid-template-columns: 1fr !important;
+  }
+
+  .fuel-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .radio-fuel {
+    justify-content: center;
+    padding: 8px 6px;
+  }
+
+  .sig-pad-card canvas {
+    height: 110px;
+  }
+
+  .form-card-header h3 {
+    font-size: 0.85rem;
+  }
+}
+
+/* Under 480px: Small Phones */
+@media (max-width: 480px) {
+  .header-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fuel-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .brand-info h1 {
+    font-size: 1rem;
+  }
+
+  .brand-info p {
+    font-size: 0.72rem;
+  }
 }
 
 /* ==========================================================================
@@ -1098,7 +1212,9 @@ textarea {
     height: auto !important;
   }
 
+  /* Re-enable preview panel during printing/exporting even on mobile */
   .preview-paper-panel {
+    display: flex !important;
     background-color: transparent !important;
     padding: 0 !important;
     overflow: visible !important;
@@ -1116,32 +1232,5 @@ textarea {
   @page {
     size: A4 portrait;
     margin: 8mm 10mm;
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 992px) {
-  .app-container {
-    grid-template-columns: 1fr;
-  }
-
-  .mobile-view-toggle {
-    display: flex;
-  }
-
-  .form-editor-panel {
-    display: flex;
-  }
-
-  .preview-paper-panel {
-    display: none;
-  }
-
-  .app-container.show-preview .form-editor-panel {
-    display: none;
-  }
-
-  .app-container.show-preview .preview-paper-panel {
-    display: flex;
   }
 }

@@ -138,11 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnCloseModal = document.getElementById('btn-close-modal');
   const historyListContainer = document.getElementById('history-list-container');
 
-  // Mobile Toggle Buttons
-  const toggleFormBtn = document.getElementById('toggle-form-btn');
-  const togglePreviewBtn = document.getElementById('toggle-preview-btn');
-  const appContainer = document.querySelector('.app-container');
-
   /* ==========================================================================
      INITIALIZATION & DEFAULTS
      ========================================================================== */
@@ -793,21 +788,6 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Se generó una advertencia al exportar PDF, probando impresión directa.');
       window.print();
     });
-  });
-
-  /* ==========================================================================
-     MOBILE VIEW TOGGLE
-     ========================================================================== */
-  toggleFormBtn.addEventListener('click', () => {
-    toggleFormBtn.classList.add('active');
-    togglePreviewBtn.classList.remove('active');
-    appContainer.classList.remove('show-preview');
-  });
-
-  togglePreviewBtn.addEventListener('click', () => {
-    togglePreviewBtn.classList.add('active');
-    toggleFormBtn.classList.remove('active');
-    appContainer.classList.add('show-preview');
   });
 
   // RUN INITIALIZATION
