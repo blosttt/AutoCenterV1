@@ -1,0 +1,16 @@
+{
+  "name": "autocenter-v1",
+  "version": "1.0.0",
+  "description": "Sistema de Gestión y Generador de Orden de Trabajo para AUTOCENTER AUTOMOTRIZ",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

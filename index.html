@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AUTOCENTER AUTOMOTRIZ - Orden de Trabajo y Recepción de Vehículo</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- html2pdf Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top App Navigation -->
+  <header class="app-header no-print">
+    <div class="header-brand">
+      <img id="app-logo-img" src="logo.jpeg" alt="AUTOCENTER AUTOMOTRIZ Logo" class="brand-logo">
+      <div class="brand-info">
+        <h1>AUTOCENTER AUTOMOTRIZ</h1>
+        <p>Sistema de Gestión de Órdenes de Trabajo y Recepción</p>
+      </div>
+    </div>
+    
+    <div class="header-actions">
+      <button id="btn-new-order" class="btn btn-outline"><i class="fa-solid fa-plus"></i> Nueva Orden</button>
+      <button id="btn-save-draft" class="btn btn-secondary"><i class="fa-solid fa-floppy-disk"></i> Guardar Borrador</button>
+      <button id="btn-load-drafts" class="btn btn-secondary"><i class="fa-solid fa-folder-open"></i> Historial</button>
+      <button id="btn-print" class="btn btn-primary"><i class="fa-solid fa-print"></i> Imprimir</button>
+      <button id="btn-export-pdf" class="btn btn-accent"><i class="fa-solid fa-file-pdf"></i> Exportar PDF</button>
+    </div>
+  </header>
+
+  <!-- View Toggle for Mobile/Tablet -->
+  <div class="mobile-view-toggle no-print">
+    <button id="toggle-form-btn" class="active"><i class="fa-solid fa-pen-to-square"></i> Formulario</button>
+    <button id="toggle-preview-btn"><i class="fa-solid fa-eye"></i> Vista Previa (Hoja)</button>
+  </div>
+
+  <main class="app-container">
+    
+    <!-- LEFT PANEL: Dynamic Form Editor -->
+    <section class="form-editor-panel no-print" id="form-panel">
+      <div class="panel-header">
+        <h2><i class="fa-solid fa-clipboard-list"></i> Formulario de Recepción</h2>
+        <span class="badge">N° Orden: <strong id="lbl-ot-num">OT-2026-001</strong></span>
+      </div>
+
+      <div class="form-scroll-container">
+
+        <!-- Config Fast Options -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <h3><i class="fa-solid fa-sliders"></i> Datos Rápidos y Folio</h3>
+          </div>
+          <div class="form-card-body row-2">
+            <div class="form-group">
+              <label for="inp-ot-number">Número de Orden / Folio</label>
+              <input type="text" id="inp-ot-number" value="OT-2026-001" placeholder="Ej: OT-001">
+            </div>
+            <div class="form-group">
+              <label for="inp-doc-date">Fecha de Recepción</label>
+              <input type="date" id="inp-doc-date">
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. DATOS DEL TALLER -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <h3><i class="fa-solid fa-warehouse"></i> 1. Datos del Taller</h3>
+            <button type="button" id="btn-save-taller-defaults" class="btn-sm btn-subtle" title="Guardar estos datos como predeterminados">
+              <i class="fa-solid fa-bookmark"></i> Guardar Predeterminado
+            </button>
+          </div>
+          <div class="form-card-body row-2">
+            <div class="form-group">
+              <label for="inp-taller-razon">Razón Social</label>
+              <input type="text" id="inp-taller-razon" value="AUTOCENTER AUTOMOTRIZ SpA">
+            </div>
+            <div class="form-group">
+              <label for="inp-taller-rut">RUT Taller</label>
+              <input type="text" id="inp-taller-rut" value="76.984.321-K">
+            </div>
+            <div class="form-group">
+              <label for="inp-taller-direccion">Dirección</label>
+              <input type="text" id="inp-taller-direccion" value="Av. San Martin 1450, Santiago">
+            </div>
+            <div class="form-group">
+              <label for="inp-taller-telefono">Teléfono</label>
+              <input type="text" id="inp-taller-telefono" value="+56 9 8765 4321">
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. DATOS DEL CLIENTE -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <h3><i class="fa-solid fa-user"></i> 2. Datos del Cliente</h3>
+          </div>
+          <div class="form-card-body row-2">
+            <div class="form-group full-width">
+              <label for="inp-cliente-nombre">Nombre Completo del Cliente</label>
+              <input type="text" id="inp-cliente-nombre" placeholder="Ej: Juan Carlos Pérez Gómez">
+            </div>
+            <div class="form-group">
+              <label for="inp-cliente-rut">RUT / Cédula / DNI</label>
+              <input type="text" id="inp-cliente-rut" placeholder="12.345.678-9">
+            </div>
+            <div class="form-group">
+              <label for="inp-cliente-telefono">Teléfono de Contacto</label>
+              <input type="text" id="inp-cliente-telefono" placeholder="+56 9 1234 5678">
+            </div>
+            <div class="form-group full-width">
+              <label for="inp-cliente-correo">Correo Electrónico</label>
+              <input type="email" id="inp-cliente-correo" placeholder="cliente@correo.com">
+            </div>
+          </div>
+        </div>
+
+        <!-- DATOS DEL VEHÍCULO -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <h3><i class="fa-solid fa-car"></i> Datos del Vehículo</h3>
+          </div>
+          <div class="form-card-body row-3">
+            <div class="form-group">
+              <label for="inp-veh-marca">Marca</label>
+              <input type="text" id="inp-veh-marca" placeholder="Ej: Toyota">
+            </div>
+            <div class="form-group">
+              <label for="inp-veh-modelo">Modelo</label>
+              <input type="text" id="inp-veh-modelo" placeholder="Ej: Corolla">
+            </div>
+            <div class="form-group">
+              <label for="inp-veh-anio">Año</label>
+              <input type="text" id="inp-veh-anio" placeholder="Ej: 2021">
+            </div>
+            <div class="form-group">
+              <label for="inp-veh-patente">Patente / Placa</label>
+              <input type="text" id="inp-veh-patente" placeholder="Ej: BB-CC-12" style="text-transform: uppercase;">
+            </div>
+            <div class="form-group full-width-2">
+              <label for="inp-veh-km">Kilometraje (KM)</label>
+              <input type="text" id="inp-veh-km" placeholder="Ej: 45.000 KM">
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. MOTIVO DE INGRESO Y TRABAJOS SOLICITADOS -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <h3><i class="fa-solid fa-wrench"></i> 3. Motivo de Ingreso y Trabajos Solicitados</h3>
+          </div>
+          <div class="form-card-body">
+            <div class="checkbox-group-grid">
+              <label class="custom-checkbox">
+                <input type="checkbox" id="chk-motivo-desabolladura">
+                <span class="checkmark"></span>
+                Desabolladura y Pintura
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" id="chk-motivo-siniestro">
+                <span class="checkmark"></span>
+                Reparación por Siniestro / Seguro
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" id="chk-motivo-mantencion">
+                <span class="checkmark"></span>
+                Mantención Periódica / Mecánica general
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" id="chk-motivo-electrica">
+                <span class="checkmark"></span>
+                Diagnóstico Eléctrico / Electrónico
+              </label>
+            </div>
+            <div class="form-group full-width margin-top">
+              <label for="inp-motivo-descripcion">Descripción detallada del daño o trabajo a realizar:</label>
+              <textarea id="inp-motivo-descripcion" rows="4" placeholder="Describa el motivo de ingreso, detalles del abollón, rayón, fallas presentadas, piezas a pintar o reparar..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. INVENTARIO Y ESTADO DE LLEGADA -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <h3><i class="fa-solid fa-boxes-packing"></i> 4. Inventario y Estado de Llegada</h3>
+          </div>
+          <div class="form-card-body">
+            <p class="section-hint">Seleccione los elementos presentes en el vehículo al momento de la recepción:</p>
+            
+            <div class="checkbox-group-grid row-2-col">
+              <label class="custom-checkbox">
+                <input type="checkbox" id="chk-inv-llave" checked>
+                <span class="checkmark"></span>
+                Llave / Control remoto
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" id="chk-inv-radio" checked>
+                <span class="checkmark"></span>
+                Radio / Pantalla frontal
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" id="chk-inv-repuesto" checked>
+                <span class="checkmark"></span>
+                Rueda de repuesto y gata
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" id="chk-inv-antena" checked>
+                <span class="checkmark"></span>
+                Antena
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" id="chk-inv-documentos" checked>
+                <span class="checkmark"></span>
+                Documentos del vehículo
+              </label>
+              <div class="flex-inline">
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="chk-inv-tapa">
+                  <span class="checkmark"></span>
+                  Tapa de rueda
+                </label>
+                <input type="text" id="inp-inv-tapa-cant" placeholder="Cant." style="width: 70px; padding: 4px 8px; font-size: 13px;">
+              </div>
+            </div>
+
+            <!-- Nivel de combustible -->
+            <div class="fuel-section">
+              <label class="section-sublabel"><i class="fa-solid fa-gas-pump"></i> Nivel de Combustible:</label>
+              <div class="fuel-options">
+                <label class="radio-fuel"><input type="radio" name="fuel_level" value="Vacío (E)"> <span>Vacío (E)</span></label>
+                <label class="radio-fuel"><input type="radio" name="fuel_level" value="1/4"> <span>1/4</span></label>
+                <label class="radio-fuel"><input type="radio" name="fuel_level" value="1/2" checked> <span>1/2</span></label>
+                <label class="radio-fuel"><input type="radio" name="fuel_level" value="3/4"> <span>3/4</span></label>
+                <label class="radio-fuel"><input type="radio" name="fuel_level" value="Lleno (F)"> <span>Lleno (F)</span></label>
+              </div>
+            </div>
+
+            <!-- Interactive Car Damage Marker -->
+            <div class="car-inspector-container">
+              <div class="car-inspector-header">
+                <label class="section-sublabel"><i class="fa-solid fa-car-side"></i> Diagrama de Inspección de Carrocería (Haga clic en la zona con daño):</label>
+                <button type="button" id="btn-clear-car-marks" class="btn-sm btn-subtle"><i class="fa-solid fa-eraser"></i> Limpiar Marcas</button>
+              </div>
+              <div class="car-diagram-wrapper">
+                <svg id="car-svg-canvas" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Background Panel -->
+                  <rect x="5" y="5" width="590" height="210" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+                  
+                  <!-- Top View Outline -->
+                  <g class="car-part" data-part="Techo / Capó / Maleta">
+                    <path d="M 230,25 C 270,20 330,20 370,25 C 390,30 410,45 420,65 L 420,155 C 410,175 390,190 370,195 C 330,200 270,200 230,195 C 210,190 190,175 180,155 L 180,65 C 190,45 210,30 230,25 Z" fill="#e2e8f0" stroke="#475569" stroke-width="3"/>
+                    <!-- Windshield Front -->
+                    <path d="M 220,50 Q 250,55 280,50 L 280,170 Q 250,165 220,170 Z" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+                    <!-- Rear Window -->
+                    <path d="M 370,60 Q 385,63 400,60 L 400,160 Q 385,157 370,160 Z" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+                    <!-- Roof Line -->
+                    <rect x="285" y="55" width="80" height="110" rx="5" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+                  </g>
+
+                  <!-- Left Side Silhouette (Top of SVG view) -->
+                  <g class="car-part" data-part="Lateral Izquierdo">
+                    <path d="M 70,30 Q 120,20 160,30 L 160,70 L 70,70 Z" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+                    <circle cx="95" cy="70" r="14" fill="#334155"/>
+                    <circle cx="135" cy="70" r="14" fill="#334155"/>
+                    <text x="115" y="45" font-size="11" font-weight="bold" fill="#475569" text-anchor="middle">Lado Izquierdo</text>
+                  </g>
+
+                  <!-- Right Side Silhouette (Bottom of SVG view) -->
+                  <g class="car-part" data-part="Lateral Derecho">
+                    <path d="M 70,150 Q 120,140 160,150 L 160,190 L 70,190 Z" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+                    <circle cx="95" cy="150" r="14" fill="#334155"/>
+                    <circle cx="135" cy="150" r="14" fill="#334155"/>
+                    <text x="115" y="175" font-size="11" font-weight="bold" fill="#475569" text-anchor="middle">Lado Derecho</text>
+                  </g>
+
+                  <!-- Front & Rear Labels -->
+                  <text x="195" y="115" font-size="12" font-weight="bold" fill="#1e293b" text-anchor="middle">FRENTE</text>
+                  <text x="405" y="115" font-size="12" font-weight="bold" fill="#1e293b" text-anchor="middle">POSTERIOR</text>
+                  <text x="325" y="115" font-size="12" font-weight="bold" fill="#64748b" text-anchor="middle">TECHO</text>
+
+                  <!-- Container for user interactive damage mark pins -->
+                  <g id="svg-marks-layer"></g>
+                </svg>
+              </div>
+              <div class="mark-legend">
+                <span><i class="fa-solid fa-circle-dot" style="color: #ef4444;"></i> Haga clic en cualquier zona del auto para marcar daño</span>
+              </div>
+            </div>
+
+            <div class="form-group full-width margin-top">
+              <label for="inp-obs-esteticas">Observaciones estéticas (Rayones, abolladuras previas, detalles de pintura):</label>
+              <textarea id="inp-obs-esteticas" rows="3" placeholder="Ej: Rayón superficial en puerta trasera izquierda. Pequeña abolladura en parachoques delantero lado copiloto."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. OBSERVACIONES GENERALES Y NOTAS ADICIONALES -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <h3><i class="fa-solid fa-comment-medical"></i> 5. Observaciones Generales y Notas Adicionales</h3>
+          </div>
+          <div class="form-card-body">
+            <div class="form-group full-width">
+              <textarea id="inp-obs-generales" rows="3" placeholder="Indique notas de seguro, número de siniestro, repuestos provistos por cliente, fecha estimada de entrega, etc."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. PRESUPUESTO ESTIMADO -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <h3><i class="fa-solid fa-calculator"></i> 6. Presupuesto Estimado</h3>
+            <button type="button" id="btn-add-budget-row" class="btn-sm btn-primary"><i class="fa-solid fa-plus"></i> Agregar Item</button>
+          </div>
+          <div class="form-card-body">
+            <div class="budget-items-wrapper">
+              <table class="budget-editor-table">
+                <thead>
+                  <tr>
+                    <th>Concepto / Descripción</th>
+                    <th style="width: 140px;">Valor ($)</th>
+                    <th style="width: 50px;"></th>
+                  </tr>
+                </thead>
+                <tbody id="budget-items-tbody">
+                  <!-- Default Rows -->
+                  <tr>
+                    <td><input type="text" class="inp-budget-concept" value="Mano de Obra (Desabolladura / Pintura / Mecánica)"></td>
+                    <td><input type="number" class="inp-budget-val" value="150000" placeholder="0"></td>
+                    <td><button type="button" class="btn-icon-del btn-del-row"><i class="fa-solid fa-trash"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" class="inp-budget-concept" value="Repuestos / Insumos / Materiales"></td>
+                    <td><input type="number" class="inp-budget-val" value="85000" placeholder="0"></td>
+                    <td><button type="button" class="btn-icon-del btn-del-row"><i class="fa-solid fa-trash"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Tax and total calculation options -->
+            <div class="budget-summary-box">
+              <div class="summary-line">
+                <span>SUBTOTAL:</span>
+                <strong id="calc-subtotal">$235.000</strong>
+              </div>
+              <div class="summary-line">
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="chk-aplicar-iva" checked>
+                  <span class="checkmark"></span>
+                  IVA (19%):
+                </label>
+                <strong id="calc-iva">$44.650</strong>
+              </div>
+              <div class="summary-line total-line">
+                <span>TOTAL ESTIMADO:</span>
+                <strong id="calc-total">$279.650</strong>
+              </div>
+            </div>
+            <p class="budget-disclaimer">*Nota: Presupuesto preliminar. Trabajos adicionales detectados durante desarme serán comunicados para aprobación previa.</p>
+          </div>
+        </div>
+
+        <!-- 7. TÉRMINOS Y CONDICIONES & FIRMAS DIGITALES -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <h3><i class="fa-solid fa-signature"></i> 7. Términos, Condiciones y Firmas</h3>
+          </div>
+          <div class="form-card-body">
+            
+            <div class="terms-editor-box">
+              <label class="section-sublabel">Términos y Condiciones (Editables):</label>
+              <textarea id="inp-terms-text" rows="4">1. El taller no se responsabiliza por objetos de valor o accesorios no declarados en el inventario.
+2. Plazos de entrega estimados según disponibilidad de repuestos y complejidad técnica.
+3. Se autoriza prueba del vehículo en ruta para diagnóstico y control de calidad.</textarea>
+            </div>
+
+            <!-- Digital Signature Pads -->
+            <div class="signatures-editor-grid">
+              
+              <!-- Cliente Signature Pad -->
+              <div class="sig-pad-card">
+                <div class="sig-pad-header">
+                  <span><i class="fa-solid fa-pen-nib"></i> Firma del Cliente (Conformidad)</span>
+                  <button type="button" id="btn-clear-sig-client" class="btn-sm btn-subtle">Limpiar</button>
+                </div>
+                <canvas id="canvas-sig-client" width="320" height="120"></canvas>
+                <div class="form-group margin-top-sm">
+                  <input type="text" id="inp-sig-client-rut" placeholder="RUT del firmante">
+                </div>
+              </div>
+
+              <!-- Taller Signature Pad -->
+              <div class="sig-pad-card">
+                <div class="sig-pad-header">
+                  <span><i class="fa-solid fa-stamp"></i> Firma / Sello del Taller</span>
+                  <button type="button" id="btn-clear-sig-taller" class="btn-sm btn-subtle">Limpiar</button>
+                </div>
+                <canvas id="canvas-sig-taller" width="320" height="120"></canvas>
+                <div class="form-group margin-top-sm">
+                  <input type="text" id="inp-sig-taller-resp" placeholder="Nombre Responsable Taller">
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: Live Printable Document Paper Sheet -->
+    <section class="preview-paper-panel" id="preview-panel">
+      
+      <div id="document-paper" class="paper-sheet">
+        
+        <!-- HEADER OF DOCUMENT -->
+        <header class="doc-header">
+          <div class="doc-brand">
+            <img src="logo.jpeg" alt="AUTOCENTER AUTOMOTRIZ" class="doc-logo-img">
+          </div>
+          <div class="doc-title-block">
+            <h1 class="doc-h1">ORDEN DE TRABAJO Y RECEPCIÓN DE VEHÍCULO</h1>
+            <p class="doc-subtitle">Documento Oficial de Ingreso y Presupuesto Taller</p>
+          </div>
+          <div class="doc-folio-badge">
+            <span class="folio-label">N° ORDEN</span>
+            <span class="folio-val" id="view-ot-number">OT-2026-001</span>
+          </div>
+        </header>
+
+        <!-- TOP TWO COLUMNS: DATOS TALLER & DATOS CLIENTE -->
+        <div class="doc-grid-2col">
+          
+          <!-- 1. DATOS DEL TALLER -->
+          <div class="doc-box">
+            <div class="doc-box-title">1. DATOS DEL TALLER</div>
+            <table class="doc-info-table">
+              <tr>
+                <td class="lbl">Razón Social:</td>
+                <td class="val" id="view-taller-razon">AUTOCENTER AUTOMOTRIZ SpA</td>
+              </tr>
+              <tr>
+                <td class="lbl">RUT:</td>
+                <td class="val" id="view-taller-rut">76.984.321-K</td>
+              </tr>
+              <tr>
+                <td class="lbl">Dirección:</td>
+                <td class="val" id="view-taller-direccion">Av. San Martin 1450, Santiago</td>
+              </tr>
+              <tr>
+                <td class="lbl">Teléfono:</td>
+                <td class="val" id="view-taller-telefono">+56 9 8765 4321</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- 2. DATOS DEL CLIENTE -->
+          <div class="doc-box">
+            <div class="doc-box-title">2. DATOS DEL CLIENTE</div>
+            <table class="doc-info-table">
+              <tr>
+                <td class="lbl">Fecha Recepción:</td>
+                <td class="val" id="view-doc-date">11/08/2026</td>
+              </tr>
+              <tr>
+                <td class="lbl">Cliente:</td>
+                <td class="val" id="view-cliente-nombre">-</td>
+              </tr>
+              <tr>
+                <td class="lbl">RUT / Cédula:</td>
+                <td class="val" id="view-cliente-rut">-</td>
+              </tr>
+              <tr>
+                <td class="lbl">Teléfono:</td>
+                <td class="val" id="view-cliente-telefono">-</td>
+              </tr>
+              <tr>
+                <td class="lbl">Correo:</td>
+                <td class="val" id="view-cliente-correo">-</td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+
+        <!-- DATOS DEL VEHICULO TABLE -->
+        <div class="doc-box margin-top-chunk">
+          <div class="doc-box-title doc-box-title-dark">DATOS DEL VEHÍCULO</div>
+          <table class="doc-vehicle-table">
+            <thead>
+              <tr>
+                <th>MARCA</th>
+                <th>MODELO</th>
+                <th>AÑO</th>
+                <th>PATENTE / PLACA</th>
+                <th>KILOMETRAJE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="view-veh-marca">-</td>
+                <td id="view-veh-modelo">-</td>
+                <td id="view-veh-anio">-</td>
+                <td id="view-veh-patente" class="text-bold">-</td>
+                <td id="view-veh-km">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 3. MOTIVO DE INGRESO Y TRABAJOS SOLICITADOS -->
+        <div class="doc-box margin-top-chunk">
+          <div class="doc-box-title">3. MOTIVO DE INGRESO Y TRABAJOS SOLICITADOS</div>
+          <div class="doc-box-content">
+            <div class="doc-check-grid">
+              <div class="doc-check-item">
+                <span class="checkbox-square" id="vchk-motivo-desabolladura"></span>
+                <span>Desabolladura y Pintura</span>
+              </div>
+              <div class="doc-check-item">
+                <span class="checkbox-square" id="vchk-motivo-siniestro"></span>
+                <span>Reparación por Siniestro / Seguro</span>
+              </div>
+              <div class="doc-check-item">
+                <span class="checkbox-square" id="vchk-motivo-mantencion"></span>
+                <span>Mantención Periódica / Mecánica general</span>
+              </div>
+              <div class="doc-check-item">
+                <span class="checkbox-square" id="vchk-motivo-electrica"></span>
+                <span>Diagnóstico Eléctrico / Electrónico</span>
+              </div>
+            </div>
+            
+            <div class="doc-sublabel">Descripción detallada del daño o trabajo a realizar:</div>
+            <div class="doc-textarea-box" id="view-motivo-descripcion">
+              -
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. INVENTARIO Y ESTADO DE LLEGADA -->
+        <div class="doc-box margin-top-chunk">
+          <div class="doc-box-title">4. INVENTARIO Y ESTADO DE LLEGADA</div>
+          <div class="doc-box-content">
+            <div class="doc-small-note">(Marcar con X los elementos presentes)</div>
+            
+            <div class="doc-check-grid 3col">
+              <div class="doc-check-item">
+                <span class="checkbox-square" id="vchk-inv-llave"></span>
+                <span>Llave / Control remoto</span>
+              </div>
+              <div class="doc-check-item">
+                <span class="checkbox-square" id="vchk-inv-radio"></span>
+                <span>Radio / Pantalla frontal</span>
+              </div>
+              <div class="doc-check-item">
+                <span class="checkbox-square" id="vchk-inv-repuesto"></span>
+                <span>Rueda de repuesto y gata</span>
+              </div>
+              <div class="doc-check-item">
+                <span class="checkbox-square" id="vchk-inv-antena"></span>
+                <span>Antena</span>
+              </div>
+              <div class="doc-check-item">
+                <span class="checkbox-square" id="vchk-inv-documentos"></span>
+                <span>Documentos del vehículo</span>
+              </div>
+              <div class="doc-check-item">
+                <span class="checkbox-square" id="vchk-inv-tapa"></span>
+                <span>Tapa de rueda (Cantidad: <u id="view-inv-tapa-cant">_</u>)</span>
+              </div>
+            </div>
+
+            <!-- Nivel de combustible -->
+            <div class="doc-fuel-bar">
+              <strong>Nivel de Combustible:</strong>
+              <div class="fuel-checks">
+                <span><span class="radio-circle" id="vrf-vacio"></span> Vacío (E)</span>
+                <span><span class="radio-circle" id="vrf-14"></span> 1/4</span>
+                <span><span class="radio-circle" id="vrf-12"></span> 1/2</span>
+                <span><span class="radio-circle" id="vrf-34"></span> 3/4</span>
+                <span><span class="radio-circle" id="vrf-lleno"></span> Lleno (F)</span>
+              </div>
+            </div>
+
+            <!-- Car Diagram rendering in document sheet -->
+            <div class="doc-car-render-box">
+              <div class="doc-sublabel" style="font-size: 10px; margin-bottom: 2px;">Inspección visual de carrocería (Zonas señaladas):</div>
+              <div id="doc-car-svg-copy" class="doc-car-svg-container"></div>
+            </div>
+
+            <div class="doc-sublabel">Observaciones estéticas (Rayones, abolladuras previas):</div>
+            <div class="doc-textarea-box" id="view-obs-esteticas">
+              Sin observaciones previas de carrocería.
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. OBSERVACIONES GENERALES Y NOTAS ADICIONALES -->
+        <div class="doc-box margin-top-chunk">
+          <div class="doc-box-title">5. OBSERVACIONES GENERALES Y NOTAS ADICIONALES</div>
+          <div class="doc-box-content">
+            <div class="doc-textarea-box" id="view-obs-generales">
+              -
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. PRESUPUESTO ESTIMADO -->
+        <div class="doc-box margin-top-chunk">
+          <div class="doc-box-title">6. PRESUPUESTO ESTIMADO</div>
+          <table class="doc-budget-table">
+            <thead>
+              <tr>
+                <th style="text-align: left;">Concepto</th>
+                <th style="width: 140px; text-align: right;">Valor</th>
+              </tr>
+            </thead>
+            <tbody id="view-budget-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="text-bold text-right">SUBTOTAL</td>
+                <td class="val-right text-bold" id="view-calc-subtotal">$0</td>
+              </tr>
+              <tr id="view-row-iva">
+                <td class="text-right">IVA (19%)</td>
+                <td class="val-right" id="view-calc-iva">$0</td>
+              </tr>
+              <tr class="total-row">
+                <td class="text-bold text-right">TOTAL ESTIMADO</td>
+                <td class="val-right text-bold" id="view-calc-total">$0</td>
+              </tr>
+            </tfoot>
+          </table>
+          <p class="doc-disclaimer-text">*Nota: Presupuesto preliminar. Trabajos adicionales detectados durante desarme serán comunicados para aprobación previa.</p>
+        </div>
+
+        <!-- 7. TÉRMINOS Y CONDICIONES & SIGNATURES -->
+        <div class="doc-box margin-top-chunk">
+          <div class="doc-box-title">7. TÉRMINOS Y CONDICIONES</div>
+          <div class="doc-box-content">
+            <div class="doc-terms-list" id="view-terms-list">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Signatures Section -->
+            <div class="doc-signatures-wrapper">
+              
+              <div class="doc-sig-box">
+                <div class="sig-img-wrap">
+                  <img id="view-img-sig-client" class="sig-img" alt="Firma Cliente">
+                </div>
+                <div class="sig-line"></div>
+                <div class="sig-label"><strong>Firma del Cliente (Conformidad)</strong></div>
+                <div class="sig-sub" id="view-sig-client-rut">RUT: ___________________________</div>
+              </div>
+
+              <div class="doc-sig-box">
+                <div class="sig-img-wrap">
+                  <img id="view-img-sig-taller" class="sig-img" alt="Firma Taller">
+                </div>
+                <div class="sig-line"></div>
+                <div class="sig-label"><strong>Firma / Sello del Taller</strong></div>
+                <div class="sig-sub" id="view-sig-taller-resp">AUTOCENTER AUTOMOTRIZ</div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Modal for saved order history -->
+  <div id="modal-history" class="modal-overlay no-print" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-clock-rotate-left"></i> Historial de Órdenes Guardadas</h3>
+        <button id="btn-close-modal" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="history-list-container" class="history-list">
+          <p class="empty-msg">No hay órdenes guardadas en el historial local.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
