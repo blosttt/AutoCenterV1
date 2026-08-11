@@ -362,48 +362,30 @@
           </div>
         </div>
 
-        <!-- 7. TÉRMINOS Y CONDICIONES & FIRMAS DIGITALES -->
+        <!-- 7. TÉRMINOS Y CONDICIONES -->
         <div class="form-card">
           <div class="form-card-header">
-            <h3><i class="fa-solid fa-signature"></i> 7. Términos, Condiciones y Firmas</h3>
+            <h3><i class="fa-solid fa-file-contract"></i> 7. Términos y Condiciones</h3>
           </div>
           <div class="form-card-body">
             
             <div class="terms-editor-box">
               <label class="section-sublabel">Términos y Condiciones (Editables):</label>
-              <textarea id="inp-terms-text" rows="4">1. El taller no se responsabiliza por objetos de valor o accesorios no declarados en el inventario.
-2. Plazos de entrega estimados según disponibilidad de repuestos y complejidad técnica.
-3. Se autoriza prueba del vehículo en ruta para diagnóstico y control de calidad.</textarea>
+              <textarea id="inp-terms-text" rows="5">1. Custodia y Retiro: Una vez notificada la terminación de los trabajos, el cliente dispondrá de 3 días hábiles para retirar el vehículo sin costo de bodegaje. Transcurrido dicho plazo, se aplicará un cargo por custodia de $15.000 + IVA diarios.
+2. Abandono: Conforme al Art. 653 del Código Civil, los vehículos que permanezcan 30 días corridos o más en dependencias del taller sin ser retirados y sin acuerdo de pago, se presumirán abandonados, facultando a Autocenter Garage para disponer de ellos a fin de satisfacer las deudas por servicios y custodia.</textarea>
             </div>
 
-            <!-- Digital Signature Pads -->
-            <div class="signatures-editor-grid">
-              
-              <!-- Cliente Signature Pad -->
-              <div class="sig-pad-card">
-                <div class="sig-pad-header">
-                  <span><i class="fa-solid fa-pen-nib"></i> Firma del Cliente (Conformidad)</span>
-                  <button type="button" id="btn-clear-sig-client" class="btn-sm btn-subtle">Limpiar</button>
-                </div>
-                <canvas id="canvas-sig-client" width="320" height="120"></canvas>
-                <div class="form-group margin-top-sm">
-                  <input type="text" id="inp-sig-client-rut" placeholder="RUT del firmante">
-                </div>
+            <div class="row-2 margin-top">
+              <div class="form-group">
+                <label for="inp-sig-client-rut">RUT Firmante Cliente</label>
+                <input type="text" id="inp-sig-client-rut" placeholder="Ej: 12.345.678-9">
               </div>
-
-              <!-- Taller Signature Pad -->
-              <div class="sig-pad-card">
-                <div class="sig-pad-header">
-                  <span><i class="fa-solid fa-stamp"></i> Firma / Sello del Taller</span>
-                  <button type="button" id="btn-clear-sig-taller" class="btn-sm btn-subtle">Limpiar</button>
-                </div>
-                <canvas id="canvas-sig-taller" width="320" height="120"></canvas>
-                <div class="form-group margin-top-sm">
-                  <input type="text" id="inp-sig-taller-resp" placeholder="Nombre Responsable Taller">
-                </div>
+              <div class="form-group">
+                <label for="inp-sig-taller-resp">Responsable Taller</label>
+                <input type="text" id="inp-sig-taller-resp" value="AUTOCENTER AUTOMOTRIZ" placeholder="Nombre Responsable">
               </div>
-
             </div>
+            <p class="section-hint margin-top-sm"><i class="fa-solid fa-pen-nib"></i> Las firmas físicas del Cliente y del Taller se realizarán directamente sobre la hoja una vez impresa.</p>
 
           </div>
         </div>
@@ -411,7 +393,7 @@
       </div>
     </section>
 
-    <!-- RIGHT PANEL: Printable Document Paper Sheet (Hidden on mobile via CSS, used for PDF/Print generation) -->
+    <!-- RIGHT PANEL: Printable Document Paper Sheet -->
     <section class="preview-paper-panel" id="preview-panel">
       
       <div id="document-paper" class="paper-sheet">
@@ -648,22 +630,18 @@
               <!-- Rendered via JS -->
             </div>
 
-            <!-- Signatures Section -->
+            <!-- Signatures Section (Blank spaces for physical signatures) -->
             <div class="doc-signatures-wrapper">
               
               <div class="doc-sig-box">
-                <div class="sig-img-wrap">
-                  <img id="view-img-sig-client" class="sig-img" alt="Firma Cliente">
-                </div>
+                <div class="sig-space-blank"></div>
                 <div class="sig-line"></div>
                 <div class="sig-label"><strong>Firma del Cliente (Conformidad)</strong></div>
                 <div class="sig-sub" id="view-sig-client-rut">RUT: ___________________________</div>
               </div>
 
               <div class="doc-sig-box">
-                <div class="sig-img-wrap">
-                  <img id="view-img-sig-taller" class="sig-img" alt="Firma Taller">
-                </div>
+                <div class="sig-space-blank"></div>
                 <div class="sig-line"></div>
                 <div class="sig-label"><strong>Firma / Sello del Taller</strong></div>
                 <div class="sig-sub" id="view-sig-taller-resp">AUTOCENTER AUTOMOTRIZ</div>

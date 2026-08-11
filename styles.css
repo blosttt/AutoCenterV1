@@ -553,42 +553,6 @@ textarea {
   font-style: italic;
 }
 
-/* SIGNATURE PADS EDITOR */
-.signatures-editor-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-top: 14px;
-}
-
-.sig-pad-card {
-  background-color: #0b1120;
-  border: 1px solid var(--bg-card-border);
-  border-radius: 8px;
-  padding: 10px;
-}
-
-.sig-pad-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-light);
-  margin-bottom: 8px;
-}
-
-.sig-pad-card canvas {
-  background-color: #ffffff;
-  border: 1px dashed #94a3b8;
-  border-radius: 6px;
-  width: 100%;
-  height: 120px;
-  cursor: crosshair;
-  touch-action: none;
-}
-
-
 /* ==========================================================================
    RIGHT PANEL: LIVE PRINTABLE DOCUMENT SHEET
    ========================================================================== */
@@ -932,19 +896,20 @@ textarea {
 .doc-terms-list {
   font-size: 9.5px;
   color: #334155;
-  line-height: 1.3;
-  margin-bottom: 12px;
+  line-height: 1.35;
+  margin-bottom: 10px;
 }
 
 .doc-terms-item {
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  text-align: justify;
 }
 
 .doc-signatures-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-top: 10px;
+  gap: 28px;
+  margin-top: 12px;
   padding-top: 4px;
 }
 
@@ -952,23 +917,13 @@ textarea {
   text-align: center;
 }
 
-.sig-img-wrap {
-  height: 55px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  margin-bottom: 4px;
-}
-
-.sig-img {
-  max-height: 100%;
-  max-width: 90%;
-  object-fit: contain;
+.sig-space-blank {
+  height: 48px;
 }
 
 .sig-line {
   border-top: 1.2px solid #0f172a;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 
 .sig-label {
@@ -1135,8 +1090,7 @@ textarea {
 
   /* Single Column Stack on Mobile */
   .row-2,
-  .row-3,
-  .signatures-editor-grid {
+  .row-3 {
     grid-template-columns: 1fr !important;
   }
 
@@ -1158,10 +1112,6 @@ textarea {
   .radio-fuel {
     justify-content: center;
     padding: 8px 6px;
-  }
-
-  .sig-pad-card canvas {
-    height: 110px;
   }
 
   .form-card-header h3 {

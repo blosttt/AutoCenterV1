@@ -113,12 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const viewSigClientRut = document.getElementById('view-sig-client-rut');
   const viewSigTallerResp = document.getElementById('view-sig-taller-resp');
 
-  // Canvas Signatures
-  const canvasClient = document.getElementById('canvas-sig-client');
-  const canvasTaller = document.getElementById('canvas-sig-taller');
-  const viewImgSigClient = document.getElementById('view-img-sig-client');
-  const viewImgSigTaller = document.getElementById('view-img-sig-taller');
-
   // Car SVG Canvas
   const carSvgCanvas = document.getElementById('car-svg-canvas');
   const svgMarksLayer = document.getElementById('svg-marks-layer');
@@ -157,10 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
         inpTallerTelefono.value = data.telefono || inpTallerTelefono.value;
       } catch(e) {}
     }
-
-    // Setup Canvas Signatures
-    setupSignatureCanvas(canvasClient, viewImgSigClient);
-    setupSignatureCanvas(canvasTaller, viewImgSigTaller);
 
     // Setup Budget Table
     renderBudgetEditor();
@@ -474,79 +464,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     DIGITAL SIGNATURE CANVAS DRAWING
-     ========================================================================== */
-  function setupSignatureCanvas(canvas, targetImg) {
-    const ctx = canvas.getContext('2d');
-    let drawing = false;
-
-    ctx.strokeStyle = '#002b66';
-    ctx.lineWidth = 2.5;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-
-    function getPos(e) {
-      const rect = canvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      return {
-        x: clientX - rect.left,
-        y: clientY - rect.top
-      };
-    }
-
-    function startDraw(e) {
-      drawing = true;
-      const pos = getPos(e);
-      ctx.beginPath();
-      ctx.moveTo(pos.x, pos.y);
-    }
-
-    function draw(e) {
-      if (!drawing) return;
-      e.preventDefault();
-      const pos = getPos(e);
-      ctx.lineTo(pos.x, pos.y);
-      ctx.stroke();
-      updateImg();
-    }
-
-    function stopDraw() {
-      if (drawing) {
-        drawing = false;
-        updateImg();
-      }
-    }
-
-    function updateImg() {
-      const dataUrl = canvas.toDataURL('image/png');
-      targetImg.src = dataUrl;
-      targetImg.style.display = 'block';
-    }
-
-    canvas.addEventListener('mousedown', startDraw);
-    canvas.addEventListener('mousemove', draw);
-    window.addEventListener('mouseup', stopDraw);
-
-    canvas.addEventListener('touchstart', startDraw, { passive: false });
-    canvas.addEventListener('touchmove', draw, { passive: false });
-    canvas.addEventListener('touchend', stopDraw);
-  }
-
-  // Clear Signature Buttons
-  document.getElementById('btn-clear-sig-client').addEventListener('click', () => {
-    const ctx = canvasClient.getContext('2d');
-    ctx.clearRect(0, 0, canvasClient.width, canvasClient.height);
-    viewImgSigClient.src = '';
-  });
-
-  document.getElementById('btn-clear-sig-taller').addEventListener('click', () => {
-    const ctx = canvasTaller.getContext('2d');
-    ctx.clearRect(0, 0, canvasTaller.width, canvasTaller.height);
-    viewImgSigTaller.src = '';
-  });
-
-  /* ==========================================================================
      SAVE TALLER DEFAULTS & PERSISTENCE
      ========================================================================== */
   btnSaveTallerDefaults.addEventListener('click', () => {
@@ -600,7 +517,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let history = JSON.parse(localStorage.getItem('autocenter_history') || '[]');
-    // Replace if exists, else prepend
     const existingIndex = history.findIndex(item => item.otNumber === otNumber);
     if (existingIndex >= 0) {
       history[existingIndex] = draftData;
